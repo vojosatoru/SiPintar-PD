@@ -4,8 +4,6 @@ from llama_index.vector_stores.pinecone import PineconeVectorStore
 from llama_index.llms.groq import Groq
 from src.core.google_embedding import GeminiNewEmbedding
 from pinecone import Pinecone
-from llama_index.embeddings.huggingface import HuggingFaceEmbedding
-from llama_index.embeddings.cohere import CohereEmbedding
 
 from src.config.settings import Settings as AppSettings
 from src.config.prompts import QA_PROMPT_TEMPLATE
@@ -23,8 +21,10 @@ class RAGEngine:
         cohere_key = AppSettings.get_cohere_api_key()
         pinecone_key = AppSettings.get_pinecone_api_key()
         groq_key = AppSettings.get_groq_api_key()
+        google_key = AppSettings.get_google_api_key()
         
-        if not all([cohere_key, pinecone_key, groq_key]):
+        # Hapus validasi cohere_key
+        if not all([pinecone_key, groq_key, google_key]):
             raise ValueError("Missing required API keys...")
     
     def _initialize(self):

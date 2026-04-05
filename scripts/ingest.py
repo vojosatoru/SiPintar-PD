@@ -18,8 +18,6 @@ from llama_index.core import (
 )
 from llama_index.vector_stores.pinecone import PineconeVectorStore
 from src.core.google_embedding import GeminiNewEmbedding # <-- TAMBAHKAN INI
-from llama_index.embeddings.huggingface import HuggingFaceEmbedding
-from llama_index.embeddings.cohere import CohereEmbedding
 from llama_index.core.node_parser import HierarchicalNodeParser, get_leaf_nodes
 from llama_parse import LlamaParse
 from pinecone import Pinecone, ServerlessSpec
@@ -37,7 +35,6 @@ GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 PINECONE_API_KEY = os.getenv("PINECONE_API_KEY")
 LLAMA_CLOUD_API_KEY = os.getenv("LLAMA_CLOUD_API_KEY")
 PINECONE_ENV = os.getenv("PINECONE_ENV", "us-east-1")
-COHERE_API_KEY = os.getenv("COHERE_API_KEY")
 INDEX_NAME = "ordal-filkom"
 
 # Configure LlamaIndex Settings
@@ -47,9 +44,9 @@ def init_settings():
         model_name="gemini-embedding-001",
     )
 
-    from llama_index.llms.gemini import Gemini
-    Settings.llm = Gemini(
-        model_name="models/gemini-1.5-flash",
+    from llama_index.llms.google_genai import GoogleGenAI
+    Settings.llm = GoogleGenAI(
+        model="gemini-2.5-flash",  # Hapus awalan "models/"
         api_key=GOOGLE_API_KEY,
         temperature=0.2
     )
@@ -136,7 +133,7 @@ def main():
     logger.info(f"Creating Pinecone index: {INDEX_NAME}")
     pc.create_index(
         name=INDEX_NAME,
-        dimension=768, # text-embedding-004 default
+        dimension=3072, # text-embedding-004 default
         metric="cosine",
         spec=ServerlessSpec(
             cloud="aws",
@@ -169,7 +166,7 @@ def main():
     logger.info(f"Hierarchical: {len(all_nodes)} total, {len(leaf_nodes)} leaf nodes")
     
     # Semantic refinement for coherence
-    USE_SEMANTIC = True 
+    USE_SEMANTIC = False 
     
     if USE_SEMANTIC:
         logger.info("Applying semantic refinement...")

@@ -28,20 +28,11 @@ class Settings:
         except:
             return os.getenv("GROQ_API_KEY")
     
-
-    # Tambahkan ini di dalam class Settings:
-    @staticmethod
-    def get_cohere_api_key():
-        try:
-            return st.secrets["COHERE_API_KEY"]
-        except:
-            return os.getenv("COHERE_API_KEY")
+    # Ubah bagian Model Configuration:
+    EMBEDDING_MODEL = "gemini-embedding-001" # <-- UBAH KE GEMINI
     
     # Vector Store Configuration
     INDEX_NAME = "ordal-filkom"
-    
-    # Ubah bagian Model Configuration:
-    EMBEDDING_MODEL = "embed-multilingual-v3.0" # Ubah nama modelnya
     
     # LLM Configuration with Fallback
     LLM_MODEL = "llama-3.3-70b-versatile"  # Primary model
