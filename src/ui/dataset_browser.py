@@ -76,8 +76,8 @@ def render_dataset_browser():
         </style>
     """, unsafe_allow_html=True)
     
-    st.sidebar.title("📚 Dokumen Aseli")
-    st.sidebar.markdown("*nih klo mw lihat dokumen asli akademik FILKOM*")
+    st.sidebar.title("📑 Dokumen Pembangunan")
+    st.sidebar.markdown("*Arsip dokumen Rencana Pembangunan Daerah*")
     st.sidebar.markdown("---")
     
     # Get all files organized by category
@@ -116,8 +116,7 @@ def render_dataset_browser():
     
     st.sidebar.markdown("---")
     st.sidebar.caption("Sumber: ")
-    st.sidebar.caption("https://filkom.ub.ac.id/profil/dokumen-resmi/")
-    st.sidebar.caption("https://filkom.ub.ac.id/apps/")
+    st.sidebar.caption("https://bapperida.kuduskab.go.id/")
 
 
 @st.dialog("📄 PDF Viewer", width="medium")
@@ -172,7 +171,6 @@ def show_pdf_viewer():
         pdf_viewer(
             input=pdf_path,
             pages_to_render=[st.session_state['current_pdf_page']],  # Show specific page
-            rendering="unwrap"
         )
                 
     except Exception as e:

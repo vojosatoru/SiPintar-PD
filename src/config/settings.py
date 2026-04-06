@@ -28,16 +28,21 @@ class Settings:
         except:
             return os.getenv("GROQ_API_KEY")
     
-    # Ubah bagian Model Configuration:
-    EMBEDDING_MODEL = "gemini-embedding-001" # <-- UBAH KE GEMINI
+    # --- PENGATURAN FLEKSIBILITAS EMBEDDING ---
+    # Ubah "local" atau "google" sesuai dengan proses ingest terakhir yang Anda lakukan
+    EMBEDDING_PROVIDER = "local" 
+    
+    GOOGLE_EMBEDDING_MODEL = "gemini-embedding-001"
+    LOCAL_EMBEDDING_MODEL = "intfloat/multilingual-e5-base"
+    # ------------------------------------------
     
     # Vector Store Configuration
-    INDEX_NAME = "ordal-filkom"
+    INDEX_NAME = "sipintar-pd"
     
     # LLM Configuration with Fallback
     LLM_MODEL = "llama-3.3-70b-versatile"  # Primary model
-    LLM_TEMPERATURE = 0.2
-    SIMILARITY_TOP_K = 30
+    LLM_TEMPERATURE = 0.0
+    SIMILARITY_TOP_K = 20
     
     # Fallback models (ordered by priority when primary hits rate limit)
     # Format: (model_name, TPM_limit, description, note)
@@ -82,8 +87,8 @@ class Settings:
     DATASET_DIR = "dataset"
     
     # UI Configuration
-    PAGE_TITLE = "Ordal Filkom - Asisten Akademik"
-    PAGE_ICON = "🎓"
+    PAGE_TITLE = "SiPintar-PD - Bapperida Kudus"
+    PAGE_ICON = "🏛️"
     LAYOUT = "centered"
     
     # Chat Configuration

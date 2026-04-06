@@ -14,34 +14,39 @@ class GeminiNewEmbedding(BaseEmbedding):
         **kwargs: Any
     ) -> None:
         super().__init__(**kwargs)
-        # Inisialisasi client API Google versi terbaru
         self.client = genai.Client(api_key=api_key)
         self.model_name = model_name
 
     def _get_query_embedding(self, query: str) -> List[float]:
-        # Khusus untuk memproses pertanyaan user saat chatting
         result = self.client.models.embed_content(
             model=self.model_name,
             contents=query,
-            config=types.EmbedContentConfig(task_type="RETRIEVAL_QUERY")
+            config=types.EmbedContentConfig(
+                task_type="RETRIEVAL_QUERY",
+                output_dimensionality=768  # <-- BATASAN DIMENSI UNTUK CHAT
+            )
         )
         return result.embeddings[0].values
 
     def _get_text_embedding(self, text: str) -> List[float]:
-        # Khusus untuk menyimpan teks tunggal ke database
         result = self.client.models.embed_content(
             model=self.model_name,
             contents=text,
-            config=types.EmbedContentConfig(task_type="RETRIEVAL_DOCUMENT")
+            config=types.EmbedContentConfig(
+                task_type="RETRIEVAL_DOCUMENT",
+                output_dimensionality=768  # <-- BATASAN DIMENSI
+            )
         )
         return result.embeddings[0].values
 
     def _get_text_embeddings(self, texts: List[str]) -> List[List[float]]:
-        # Khusus untuk memproses ratusan batch sekaligus di ingest.py
         result = self.client.models.embed_content(
             model=self.model_name,
             contents=texts,
-            config=types.EmbedContentConfig(task_type="RETRIEVAL_DOCUMENT")
+            config=types.EmbedContentConfig(
+                task_type="RETRIEVAL_DOCUMENT",
+                output_dimensionality=768  # <-- BATASAN DIMENSI BATCH
+            )
         )
         return [e.values for e in result.embeddings]
     

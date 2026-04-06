@@ -46,8 +46,8 @@ def init_chat_handler():
         return None
 
 # UI Header
-st.title("🎓 Ordal Filkom")
-st.markdown("*Asisten Akademik Virtual FILKOM UB (Zero Hallucination Protocol)*")
+st.title("🏛️ SiPintar-PD")
+st.markdown("*Sistem Pencarian Informasi Target Rencana Pembangunan Daerah - Bapperida Kabupaten Kudus*")
 
 # Initialize Session State for conversation history
 if "messages" not in st.session_state:
@@ -182,7 +182,7 @@ with st.sidebar:
         st.rerun()
 
 # Normal sticky chat input
-if prompt := st.chat_input("tanya apapun tentang akademik FILKOM..."):
+if prompt := st.chat_input("ari target program, indikator kinerja, atau data RENSTRA/RKPD..."):
     # Display user message
     st.session_state.messages.append({"role": "user", "content": prompt})
     with st.chat_message("user"):
@@ -249,5 +249,5 @@ if prompt := st.chat_input("tanya apapun tentang akademik FILKOM..."):
 
 # Footer
 st.markdown("---")
-st.caption("⚠️ Disclaimer: Ordal Filkom cuma asisten AI, pls cek dokumen aslinya, kalo salah salah ya maap :)")
+st.caption("⚠️ Disclaimer: SiPintar-PD cuma asisten AI, pls cek dokumen aslinya, kalo salah salah ya maap :)")
 
